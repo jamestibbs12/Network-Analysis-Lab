@@ -1,6 +1,59 @@
 # Network-Analysis-Lab
 A hands-on cybersecurity lab focused on network traffic analysis, packet inspection, and protocol analysis using Wireshark to identify network anomalies, security vulnerabilities, IoCs, and baseline network behavior.
 
+## 🌐 Standard Network Traffic Analysis & Protocol Baseline
+
+To establish a baseline for normal network behaviors and understand standard protocol mechanics, a series of controlled network interactions were analyzed using Wireshark display filters. Below is a breakdown of core foundational protocols and diagnostic procedures.
+
+---
+
+### 1. ICMP (Internet Control Message Protocol)
+* **Objective:** Verify network layer connectivity and latency to an external host (`google.com`).
+* **Analysis & Mechanics:** Using the `icmp` filter isolates the basic Echo Request (Type 8) sent by the local host and the corresponding Echo Reply (Type 0) returned by the target server. This test validates functional outbound routing and basic Layer 3 end-to-end reachability.
+* **Filter Used:** `icmp`
+
+![ICMP Ping Verification](screenshots/icmp_ping_google.com.png)
+
+---
+
+### 2. DNS (Domain Name System)
+* **Objective:** Observe application-layer name resolution converting a human-readable domain into an IP address.
+* **Analysis & Mechanics:** Filtering for `dns` captures the initial UDP standard query (A record request) for `example.com` sent to port 53, followed immediately by the DNS server's response packet containing the authoritative IPv4 mapping.
+* **Filter Used:** `dns`
+
+![DNS Resolution Trace](screenshots/dns_query_and_resolution.png)
+
+---
+
+### 3. HTTP Request & Response (Hypertext Transfer Protocol)
+* **Objective:** Inspect cleartext web traffic delivery and status communication.
+* **Analysis & Mechanics:** Applying the `http` filter isolates the standard client-side browser `GET` request pulling a web resource and pairs it with the web server's corresponding `200 OK` transaction response payload. This confirms successful application layer delivery over TCP.
+* **Filter Used:** `http`
+
+![HTTP Request and Response](screenshots/http_request_and_response.png)
+
+---
+
+### 4. TLS Handshake (Transport Layer Security)
+* **Objective:** Analyze the initial security negotiation sequence establishing encrypted web communications.
+* **Analysis & Mechanics:** Utilizing the `tls` filter reveals the foundational cryptographical handshake mechanics:
+  * **Client Hello:** The source machine transmits an unencrypted packet announcing its maximum supported TLS version along with a comprehensive list of supported cryptographic options (**Cipher Suites**).
+  * **Server Hello:** The destination server responds, actively evaluating the client's capabilities and selecting the specific **Cipher Method** and algorithm suite that will govern the session's encryption.
+* **Filter Used:** `tls`
+
+![TLS Handshake Negotiation](screenshots/tls_handshake.png)
+
+---
+
+### 5. Cleartext Credential Interception (Unsecured POST Data)
+* **Objective:** Demonstrate the severe security risks associated with submitting sensitive authentication vectors over unencrypted protocols.
+* **Analysis & Mechanics:** Isolating web submissions using the `http.request.method == "POST"` display filter exposes application data fields sent inline to a web server. Because the connection lacks TLS/SSL wrappers, highly sensitive variables—such as plain text usernames, login passwords, or form values—can be viewed in the cleartext packet byte stream by anyone monitoring the wire.
+* **Filter Used:** `http.request.method == "POST"`
+
+![Plaintext Credential Capture](screenshots/plaintext_credentials_http.png)
+
+
+
 ## 🔍 Compromised Host Identification & Artifact Analysis
 
 To establish the scope of the incident and properly identify the target profile, a deep-dive analysis of the network infrastructure layers was conducted within the packet capture. Below is the verified identity and hardware profile of the affected asset.
