@@ -24,7 +24,7 @@ By isolating the perimeter breach and analyzing the outbound connection requests
 * **Source MAC:** `00:19:d1:b2:4d:ad` (Intel network interface card)
 * **Source IP:** `10.2.28.101`
 
-![Network Layer Evidence](Network-Analysis-Lab/screenshots/MAC_address_of_infected_host.png)
+![Network Layer Evidence](screenshots/MAC_address_of_infected_host.png)
 
 #### 2. Host Machine Identification
 The device identity was cross-referenced and confirmed via network broadcast protocols. The operating system actively mapped the network configuration back to the specific workstation deployment name.
