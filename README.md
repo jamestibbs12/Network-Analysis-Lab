@@ -106,3 +106,10 @@ A deep-packet string search extracted the full legal identity linked directly to
 * **Victim Full Name:** Becka Rolf
 
 ![Full Name Verification Screenshot](screenshots/full_name_using_findpacket.png)
+
+---
+
+## 👥 Credits & Attributions
+* **Malicious PCAP Source:** [Malware-Traffic-Analysis.net](https://www.malware-traffic-analysis.net/) (Brad Duncan)
+* **Case Study / Lab Scenario:** [Easy as 123]
+
