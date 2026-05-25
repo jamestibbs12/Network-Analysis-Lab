@@ -19,27 +19,37 @@ To establish the scope of the incident and properly identify the target profile,
 
 ### 🖼️ Evidence & Forensic Artifacts
 
-#### 1. Network Layer Profile (IP & MAC Address)
+#### 1. Initial Compromise & Analysis (Identifying compromised system & activity)
+The infected device was identified using an IP address filter to show which system was interacting with the known malicious IP (`45.131.214.85`). 
+
+![Evidence of Compromise](screenshots/initial_compromise.png)
+
+Following host compromise, traffic analysis revealed HTTP-based Command and Control (C2) activity over port 443. The infected host regularly "checked in" with the attacker's server, executing decrypted commands via a background RAT and returning encrypted data using HTTP POST requests.
+
+![Evidence of C2 Channel](screenshots/evidence_of_C2.png)
+
+#### 2. Network Layer Profile (IP & MAC Address)
 By isolating the perimeter breach and analyzing the outbound connection requests to the malicious Command and Control (C2) infrastructure IP (`45.131.214.85`), the internal victim machine's Layer 2 and Layer 3 configurations were extracted. 
 * **Source MAC:** `00:19:d1:b2:4d:ad` (Intel network interface card)
 * **Source IP:** `10.2.28.101`
 
 ![Network Layer Evidence](screenshots/MAC_address_of_infected_host.png)
 
-#### 2. Host Machine Identification
+#### 3. Host Machine Identification
 The device identity was cross-referenced and confirmed via network broadcast protocols. The operating system actively mapped the network configuration back to the specific workstation deployment name.
 * **Hostname:** `DESKTOP-TEYQ2NR`
 
-![Hostname Evidence](path/to/your/hostname_or_dhcp_screenshot.png)
+![Hostname Evidence](screenshots/host_name_and_domain_name.png)
+![Hostname Evidence via NetBIOS](screenshots/host_name_with_NetBIOS_filter.png)
 
-#### 3. Domain Account Username
+#### 4. Domain Account Username
 Analyzing the Kerberos ticket requests (`AS-REQ`) directed toward the local Domain Controller (`easyas123-dc.easyas123.tech`) exposed the unique Security Account Manager (SAM) login ID used during the session.
 * **Username String:** `brolf`
 
-![Username Kerberos Evidence](path/to/your/username_screenshot.png)
+![Username Kerberos Evidence](screenshots/username_via_Kerberos_filter.png)
 
-#### 4. Victim Identity Verification (Full Name)
+#### 5. Victim Identity Verification (Full Name)
 A deep-packet string search extracted the full legal identity linked directly to the `brolf` account profile within the Active Directory schema database traffic, ensuring absolute validation of the target identity.
 * **Victim Full Name:** Becka Rolf
 
-![Full Name Verification Screenshot](path/to/your/full_name_using_findpacket.png)
+![Full Name Verification Screenshot](screenshots/full_name_using_findpacket.png)
