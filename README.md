@@ -34,14 +34,14 @@ To establish a baseline for normal network behaviors and understand standard pro
 
 ---
 
-### 4. TLS Handshake (Transport Layer Security)
+### 4. TCP/TLS Handshake (Transport Layer Security)
 * **Objective:** Analyze the initial security negotiation sequence establishing encrypted web communications.
-* **Analysis & Mechanics:** Utilizing the `tls` filter reveals the foundational cryptographical handshake mechanics:
+* **Analysis & Mechanics:** Utilizing the `tcp` filter reveals the foundational cryptographical handshake mechanics:
   * **Client Hello:** The source machine transmits an unencrypted packet announcing its maximum supported TLS version along with a comprehensive list of supported cryptographic options (**Cipher Suites**).
   * **Server Hello:** The destination server responds, actively evaluating the client's capabilities and selecting the specific **Cipher Method** and algorithm suite that will govern the session's encryption.
-* **Filter Used:** `tls`
+* **Filter Used:** `tcp`
 
-![TLS Handshake Negotiation](screenshots/tls_handshake.png)
+![TCP Handshake & Connection/TLS Handshake & Negotiation](screenshots/tls_handshake.png)
 
 ---
 
